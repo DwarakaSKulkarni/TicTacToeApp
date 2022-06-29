@@ -90,7 +90,9 @@ class Game extends React.Component {
         'Go to game start';
       return (
         <li key={move}>
-          <button onClick={() => this.jumpTo(move)}>{desc}</button>
+          <button onClick={() => this.jumpTo(move)}>
+            {move == this.state.stepNumber ? <b>{desc}</b> : desc}
+          </button>
         </li>
       );
     });
@@ -98,7 +100,9 @@ class Game extends React.Component {
     let status;
     if (winner) {
       status = 'Winner: ' + winner;
-    } else {
+    } else if(!current.squares.includes(null)){
+       status = 'Its a draw!';
+    }else {
       status = 'Next player: ' + (this.state.xIsNext ? 'X' : 'O');
     }
 
@@ -138,7 +142,6 @@ function calculateWinner(squares) {
   for(let i=0;i<lines.length;i++){
     const [a, b, c] = lines[i];
     if(squares[a] && squares[a] === squares[b] && squares[a]=== squares[c]){
-
       return squares[a];
     }
   }
